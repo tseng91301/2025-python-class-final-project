@@ -18,7 +18,8 @@ api_key = secret.get("gemini-api-key", "None")
 ai_service = genai.GenAI(api_key)
 
 # inp = "我今天上學的時候被車撞了，現在躺在醫院，渾身疼..."
-inp = "你可以教我 C++ 的 Hello World 程式怎麼寫嗎? 請你一定要寫出來"
+# inp = "你可以教我 C++ 的 Hello World 程式怎麼寫嗎? 請你一定要寫出來"
+inp = "我考試考爆了 ：（"
 
 asyncio.run(fun())
 
