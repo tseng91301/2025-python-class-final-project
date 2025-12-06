@@ -73,7 +73,7 @@ class GenAI:
                 print(f"API 呼叫失敗: {str(e)}")
                 return "Invalid Output"
             
-    async def generate(self, prompt):
+    def generate(self, prompt):
         try:
             # 使用非同步 client
             client = genai.Client(api_key=self.api_key)
