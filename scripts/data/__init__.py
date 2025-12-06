@@ -49,11 +49,3 @@ class UserData:
             f.close()
             print(f"{self.name}'s data has been saved.")
             pass
-
-
-
-
-if __name__ == "__main__":
-    user_data = UserData()
-    user_data.create(name="test2", force=False)
-    pass

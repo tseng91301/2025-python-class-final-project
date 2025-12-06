@@ -16,10 +16,3 @@ class Logs:
             f.write(f"[{datetime.now()}] {message}\n")
             f.close()
             pass
-
-if __name__ == "__main__":
-    project_root = Path(".").parent
-
-    logs = Logs(project_root / "logs")
-
-    logs.write("ABC")
