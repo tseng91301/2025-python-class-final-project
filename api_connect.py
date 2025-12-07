@@ -19,6 +19,7 @@ user_name = "anonymous"  # 未來呼叫 API 更改
 # 狀態儲存變數
 genai_waiting = False
 genai_response = ""
+genai_mood_value = 0.0
 
 # 設定 Logs 組件
 logs = Logs(project_root / "logs")
@@ -51,7 +52,13 @@ _loop_thread.start()
 
 # 初始化設定
 def init(name: str, force: bool = False):
+    global genai_mood_value
     userData.create(name, force=force)
+    # 讀取先前的情緒分數
+    if len(userData.conversations) > 0:
+        genai_mood_value = userData.conversations[-1].ai_return["mood_value"]
+    elif len(userData.notes) > 0:
+        genai_mood_value = userData.notes[-1].mood_score
 
 # ============================================================
 # 非同步 AI 對話（主 async function）
@@ -60,6 +67,7 @@ def init(name: str, force: bool = False):
 async def conversation(inp: str):
     global genai_waiting
     global genai_response
+    global genai_mood_value
 
     loop = asyncio.get_running_loop()
 
@@ -90,6 +98,7 @@ async def conversation(inp: str):
 
     # 回存
     genai_response = ret["response"]
+    genai_mood_value = ret["mood_value"]
 
     logs.write(f"[conversation] AI answered q='{inp}'")
     genai_waiting = False
