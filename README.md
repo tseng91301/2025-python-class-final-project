@@ -1,3 +1,5 @@
+## 專案 WorkFlow (僅供參考)
+
 ```mermaid
 ---
 config:
@@ -17,6 +19,25 @@ flowchart TB
     n2@{ shape: hex}
 
 ```
+
+## 初次設定專案
+### 安裝所需的函式庫/模組
+```shell
+# Windows 系統執行下面命令
+pip install -r requirements.txt
+
+# Linux 發行版系統執行下面命令
+pip install -r requirements-linux.txt
+```
+### 設定 secret key
+1. 在專案根目錄新建 `settings/secret.json`
+2. 取得一個 Gemini 的 API KEY
+3. 將 API KEY 的字串放到 `settings/secret.json` 中
+  ```json
+  {
+      "gemini-api-key": "AIxxxxxxxxxxx..."
+  }
+  ```
 
 ## 後端處理程式
 > 後端負責的是資料儲存、整合資訊與生程式 AI 互動。
@@ -71,4 +92,5 @@ flowchart TB
 }
 ```
 
-### 後端的各種 API
+## 測試後端程式的運作
+> 參考 `/test_api.py` 內的程式碼，將其複製到 REPL 中逐行執行，觀察結果
