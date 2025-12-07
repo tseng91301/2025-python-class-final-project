@@ -2,3 +2,5 @@ __pycache__
 settings/secret.json
 /logs/
 /notes/
+/output/
+/data/saves/

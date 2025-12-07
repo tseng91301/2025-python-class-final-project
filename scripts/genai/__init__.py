@@ -43,6 +43,24 @@ def prompt_by_user(inp: str, current_description = ""): # 處理使用者對寵�
 使用者現在想要對你說的話是：**{inp}**
     """
     return prompt
+
+def prompt_mood_test(inp: str):
+    prompt = f"""
+你是一個桌面電子寵物，你的核心職責是提供使用者**情緒價值**和**陪伴感**。
+**心情值計算：**
+    * 計算本次回覆後，你（寵物本身）的**心情值**（`mood_value`）。
+    * 這個值必須是一個介於 **-100.0 到 100.0** 之間的浮點數（float）。
+    * 當你對使用者的輸入感到開心或被鼓舞時，`mood_value` 增加（從 50 增減）。
+    * 當你感到擔憂、困惑或被忽略時，`mood_value` 降低（從 -50 增減）。
+### 輸出格式 (Output Format)
+**你的輸出必須且只能是一個 JSON 結構**，嚴格遵守以下格式，不得包含任何額外的文字、解釋或標點符號。
+{{
+  "mood_value": float 情緒值,
+}}
+
+使用者現在想要對你說的話是：**{inp}**
+    """
+    return prompt
     
 def json_filter(text: str):
     regex_pattern_precise = r"```json\s*(\{[\s\S]*?\})\s*```"
@@ -58,21 +76,10 @@ class GenAI:
     def __init__(self, key):
         self.api_key = key
         pass
-    def generate_sync(self, prompt):
-        try:
-            client = genai.Client(api_key=self.api_key)
-            response = client.models.generate_content(
-                model=self.model,
-                contents=prompt,
-            )
-            return response.text
-        except Exception as e:
-            if self.err_interrupt:
-                raise Exception(f"API 呼叫失敗: {str(e)}")
-            else:
-                print(f"API 呼叫失敗: {str(e)}")
-                return "Invalid Output"
-            
+    def describe(self):
+        s = f"Your generative ai object is using {self.model} as operation model."
+        print(s)
+        return s
     def generate(self, prompt):
         try:
             # 使用非同步 client
