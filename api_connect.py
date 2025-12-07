@@ -152,6 +152,9 @@ async def ai_mood_test(inp: str, note: Note):
         print("Got some errors during execution, see log file.")
         logs.write(f"ai_mood_test exception: {repr(e)}", level=LOG_LEVEL_ERROR)
 
+def get_all_notes() -> list:
+    return [n.output() for n in userData.notes]
+
 def write_note(inp: str, mood_test: bool = False):
     n = Note(t=inp, mood_score=0)
     logs.write(f"Note added to userData: {inp}")

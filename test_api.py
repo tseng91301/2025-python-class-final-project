@@ -16,4 +16,5 @@ print(api.genai_response)        # <-- 顯示回答
 print(api.genai_mood_value)      # 當前心情分數
 
 # 等一下想看的時候再匯出
-api.export_notes()
+api.get_all_notes() # 用陣列形式輸出所有筆記內容
+api.export_notes() # 輸出所有筆記內容到指定位置
