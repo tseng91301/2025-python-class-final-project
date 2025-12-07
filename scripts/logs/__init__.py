@@ -1,6 +1,10 @@
 from pathlib import Path
 from datetime import datetime
 
+LOG_LEVEL_INFO = "INFO"
+LOG_LEVEL_ERROR = "ERROR"
+LOG_LEVEL_WARNING = "WARNING"
+
 class Logs:
     def __init__(self, path: Path):
         path.mkdir(parents=True, exist_ok=True)
@@ -11,8 +15,8 @@ class Logs:
             f.close()
             pass
     
-    def write(self, message: str):
-        with open(self.file_name, "a") as f:
-            f.write(f"[{datetime.now()}] {message}\n")
+    def write(self, message: str, level = LOG_LEVEL_INFO):
+        with open(self.file_name, "a", encoding="utf-8") as f:
+            f.write(f"[{datetime.now()}] [{level}] {message}\n")
             f.close()
             pass

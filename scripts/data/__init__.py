@@ -98,7 +98,8 @@ class UserData:
 
     def add_conversation(self, c: Conversation):
         self.conversations.append(c)
-        self.description = c.ai_return["description"]
+        if c.ai_return["description"] != "N/A":
+            self.description = c.ai_return["description"]
         self.save()
         return
 
