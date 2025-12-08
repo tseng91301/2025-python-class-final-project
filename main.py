@@ -6,6 +6,7 @@ from PyQt5.QtCore import Qt, QTimer, QUrl
 from PyQt5.QtMultimedia import QSoundEffect
 
 from diary import DiaryWindow
+from conversation import ConversationWindow
 
 
 # ================================
@@ -209,15 +210,15 @@ class DesktopPet(QWidget):
     #       開啟聊天
     # ================================
     def open_conversation(self):
-        self.diary_window = DiaryWindow()
+        self.conversation_window = ConversationWindow()
 
         # 當視窗關閉 → 恢復狀態
-        self.diary_window.on_close_callback = self.restore_state
+        self.conversation_window.on_close_callback = self.restore_state
 
-        self.diary_window.show()
+        self.conversation_window.show()
 
         # 桌寵移到視窗左側
-        geo = self.diary_window.geometry()
+        geo = self.conversation_window.geometry()
         pet_x = geo.x() - self.size - 20
         pet_y = geo.y() + geo.height() - self.size+15
         self.move(pet_x, pet_y)
