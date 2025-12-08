@@ -3,20 +3,81 @@
 ```mermaid
 ---
 config:
-  layout: dagre
+  layout: elk
 ---
 flowchart TB
-    C{"Start"} -- Initialize --> E["Log System"] & n1["Message Handler"] & n4["Mood System"]
-    n2["Got Message Input"] -.-> n1
-    n1 -. "3. Input to" .-> n3["Gemini API (Async)"]
-    n2 -. "1. Call" .-> n4
-    n4 -. "2. Get Current Mood" .-> n1
-    n3 -. "4. Update Current Mood" .-> n4
-    n3 -. "5. Return" .-> n5(["Result"])
-    E@{ shape: rounded}
-    n1@{ shape: rounded}
+ subgraph s1["前後端互動接口"]
+        n4["api.conversation"]
+        n5["api.write_note"]
+        n6["api.get_all_notes"]
+        n7["api.export_notes"]
+  end
+ subgraph s2["資料貯存位置"]
+        n8["Notes"]
+        n9["Conversations"]
+  end
+ subgraph s3["AI 互動接口"]
+        n10["Get Mood Score"]
+        n11["Chat Responser"]
+  end
+ subgraph s4["暫存區"]
+        n12["genai_waiting: bool"]
+        n13["genai_response: str"]
+        n14["genai_mood_value: str"]
+  end
+ subgraph s5["前端畫面"]
+        n16["日記視窗"]
+        n1["聊天室視窗"]
+        n17["桌寵本體"]
+  end
+    n1 -- 使用者欲與 AI 互動 --> n4
+    n16 -- 撰寫日記 --> n5
+    n16 -- 取得筆記列表 --> n6
+    n4 --> n11
+    n5 --> n10
+    n5 -- 儲存日記資料 --> n8
+    n11 -- 結果貯存 --> n9
+    n8 -- 資料庫回傳筆記列表 （傳統 json 形式） --> n16
+    n8 --> n7
+    n10 -- 更新 Note 的情緒分數 --> n8
+    n11 -- 更新暫存區資訊 --> s4
+    s4 -- 將資訊放到畫面的聊天室 --> n1
+    n7 -- 儲存 --> n15["外部檔案"]
+    n16 -. 尚未實做 .-x n7
+
     n4@{ shape: rounded}
-    n2@{ shape: hex}
+    n5@{ shape: rounded}
+    n6@{ shape: rounded}
+    n7@{ shape: rounded}
+    n8@{ shape: cyl}
+    n9@{ shape: cyl}
+    n11@{ shape: rect}
+    n13@{ shape: rect}
+    n14@{ shape: rect}
+    n16@{ shape: rounded}
+    n1@{ shape: rounded}
+    n17@{ shape: rounded}
+    n15@{ shape: card}
+     n4:::APIFunction
+     n5:::APIFunction
+     n6:::APIFunction
+     n7:::APIFunction
+     n8:::Sky
+     n9:::Sky
+     n10:::API
+     n11:::API
+     n12:::Sky
+     n13:::Sky
+     n14:::Sky
+     n16:::Class_01
+     n1:::Class_01
+     n17:::Class_01
+    classDef Aqua stroke-width:1px, stroke-dasharray:none, stroke:#46EDC8, fill:#DEFFF8, color:#378E7A
+    classDef APIFunction stroke-width:4px, stroke-dasharray:0, stroke:#FF6D00, fill:#FFE0B2, color:#FF6D00
+    classDef API Function stroke-width:4px, stroke-dasharray:0, stroke:#FF6D00, fill:#FFE0B2, color:#FF6D00
+    classDef Sky stroke-width:1px, stroke-dasharray:none, stroke:#374D7C, fill:#E2EBFF, color:#374D7C
+    classDef Class_01 stroke-width:4px, stroke-dasharray:0, stroke:#2962FF, fill:#BBDEFB, color:#2962FF
+    style s1 stroke:#000000
 
 ```
 
