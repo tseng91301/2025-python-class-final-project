@@ -39,6 +39,9 @@ pip install -r requirements-linux.txt
   }
   ```
 
+## 如何使用
+* 在終端機中執行 `python main.py` 即可跳出互動視窗
+
 ## 後端處理程式
 > 後端負責的是資料儲存、整合資訊與生程式 AI 互動。
 ### 主要使用的 API
