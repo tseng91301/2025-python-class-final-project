@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import (
     QWidget, QApplication, QVBoxLayout, QHBoxLayout,
     QTextEdit, QLineEdit, QPushButton
 )
-from PyQt5.QtCore import QTimer
 import api_connect as api
 
 from RecordWindow import RecordWindow  # ⭐ 新增：載入紀錄視窗
@@ -12,7 +11,7 @@ class DiaryWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Diary")
-        self.resize(500, 350)
+        self.resize(500, 150)
 
         # 移到螢幕右下角
         screen = QApplication.primaryScreen().availableGeometry()
@@ -24,10 +23,6 @@ class DiaryWindow(QWidget):
         # UI 介面
         # --------------------------
         layout = QVBoxLayout(self)
-
-        # 顯示區
-        self.chat_box = QTextEdit()
-        self.chat_box.setReadOnly(True)
 
         # 水平區：輸入框 + 送出按鈕
         input_layout = QHBoxLayout()
@@ -41,7 +36,6 @@ class DiaryWindow(QWidget):
         # 紀錄按鈕
         self.record_button = QPushButton("紀錄")
 
-        layout.addWidget(self.chat_box)
         layout.addLayout(input_layout)
         layout.addWidget(self.record_button)
 
@@ -65,11 +59,10 @@ class DiaryWindow(QWidget):
         if not text:
             return
 
-        self.chat_box.append(f"🧑：{text}")
-        self.input_box.clear()
-
         # ⭐ 寫入 notes（日記）
         api.write_note(text, mood_test=True)
+        
+        self.input_box.clear()
 
     # --------------------------
     # 打開紀錄視窗
