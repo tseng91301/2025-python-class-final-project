@@ -52,11 +52,6 @@ class DiaryWindow(QWidget):
         self.input_box.returnPressed.connect(self.send_message)
         self.record_button.clicked.connect(self.open_record_window)
 
-        # AI 回覆檢查
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.check_ai)
-        self.timer.start(300)
-
         api.init("桌寵使用者", force=False)
 
         # 由 main.py 設定關閉事件 callback
